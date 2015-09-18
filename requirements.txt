@@ -1,0 +1,6 @@
+flask
+pymongo
+#git+https://github.com/grangier/python-goose
+requests
+lxml
+
