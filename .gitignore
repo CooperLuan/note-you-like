@@ -47,11 +47,14 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-
 # Sphinx documentation
 docs/_build/
 
 # PyBuilder
 target/
+
+# uwsgi
+*.pid
+*.sock
+*-sample.ini
+*.log

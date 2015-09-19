@@ -1,7 +1,8 @@
-#!python3
+#!python2
 
 from flask import Flask, render_template
-app = Flask(__name__)
+
+app = Flask('nyl')
 
 
 @app.route("/")
