@@ -1,4 +1,5 @@
 start:
+	echo `grep "http-socket" uwsgi-conf.ini`
 	uwsgi --ini uwsgi-conf.ini
 
 reload:
