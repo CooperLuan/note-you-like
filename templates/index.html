@@ -31,12 +31,12 @@
           </ul>
         </li> -->
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+      <div class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="URL">
+          <input type="text" class="form-control" placeholder="URL" name="input-url" id="input-url">
         </div>
-        <button type="submit" class="btn btn-default">Go</button>
-      </form>
+        <button type="btn" class="btn btn-default" id="btn-url-fetch">Go</button>
+      </div>
       <ul class="nav navbar-nav navbar-right">
         <li>
             <a href="https://cooperluan.github.io" target="blank">
@@ -55,8 +55,57 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<div class="container-fluid">
+  <div class="panel panel-default" id="panel-url-resp">
+    <div class="panel-heading">
+      Panel heading without title
+    </div>
+    <!-- <div class="panel-body">
+    </div> -->
+    <textarea class="form-control" rows="20">
+      HTML Response Here
+    </textarea>
+    <div class="panel-footer">
+      <button class="btn btn-default" id="btn-preview">Preview</button>
+      <button class="btn btn-default" id="btn-report-err-resp">反馈抓取错误</button>
+    </div>
+  </div>
+</div>
 <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
 <script type="text/javascript" src="http://cdn.staticfile.org/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://cdn.staticfile.org/sugar/1.4.1/sugar-full.min.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/bootbox.js/4.3.0/bootbox.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  $("#btn-url-fetch").click(formClicked);
+  $("#btn-url-fetch").keyup(function(event){
+      if(event.keyCode == 13){
+          formClicked();
+      }
+  });
+
+  $("#btn-report-err-resp").click(reportURLFetchError);
+
+  function formClicked() {
+    var url = $("#input-url").val();
+    $.post('/api/url/fetch', {
+      'url': url,
+    }, function(data) {
+      var panel = $("#panel-url-resp");
+      panel.find('.panel-heading').text(data.data.title);
+      panel.find('textarea').val(data.data.cleaned_text);
+    }, 'json');
+  }
+
+  function reportURLFetchError() {
+    var url = $("#input-url").val();
+    $.post('/api/feedback/url_fetch', {
+      url: url,
+    }, function(data) {
+      bootbox.alert("反馈成功");
+    }, 'json');
+  }
+})
+</script>
 </body>
 </html>

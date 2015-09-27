@@ -4,3 +4,4 @@ requests
 lxml
 goose-extractor
 uwsgi
+markdown2

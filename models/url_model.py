@@ -23,6 +23,7 @@ class URLModel(BaseModel):
             'User-Agent': random.choice(USER_AGENT_LIST),
         }
         resp = requests.get(
+            self.url,
             headers=headers,
             cookies=self.cookies or {},
             proxies=self.proxies or {},
